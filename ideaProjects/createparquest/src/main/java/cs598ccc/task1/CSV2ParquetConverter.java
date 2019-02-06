@@ -26,7 +26,7 @@ public class CSV2ParquetConverter {
                 .option("header", "true")
                 .option("sep",",")
                 .option("dateFormat", "y-M-d")
-                .load("/tmp/cs598ccc/raw_data/On_Time_On_Time_Performance_2008_10.csv");
+                .load("/tmp/cs598ccc/raw_data/*/*.csv");
         System.out.println("Excerpt of the dataframe content:");
         df.show(7, 90);
         System.out.println("Dataframe's schema:");
@@ -97,12 +97,13 @@ public class CSV2ParquetConverter {
         cleansed_df.write()
                 .format("parquet")
                 .mode("overwrite")
+                .partitionBy("Year")
                 .save("/tmp/cs598ccc/parquet_data/ontimeperf");
 
         Dataset<Row> parquet_df = spark.read().format("parquet").load("/tmp/cs598ccc/parquet_data/ontimeperf");
         parquet_df.show(7);
         parquet_df.printSchema();
-        System.out.println("The parquet dataframe has " + parquet_df.count() + " rows.");
+        System.out.println("The parquet dataframe has " + parquet_df.count() + " rows. and " + parquet_df.rdd().getPartitions() + " partitions " );
 
        Dataset<Row> counts =  parquet_df.selectExpr("count(distinct(origin)) as origin", "count(distinct(Dest)) as dest", "sum(departure) as departure");
        System.out.println("Unique Origins and Destination Airports:" );
