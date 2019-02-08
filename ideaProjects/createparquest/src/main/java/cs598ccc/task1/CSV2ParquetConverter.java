@@ -20,8 +20,10 @@ public class CSV2ParquetConverter {
     public void start() {
         SparkSession spark = SparkSession.builder()
                 .appName("Convert CSV to Parquet")
-                .master("local")
+                .master("local[*]")
                 .getOrCreate();
+
+        spark.sparkContext().setLogLevel("WARN");
 
         Dataset<Row> df = spark.read().format("csv")
                 .option("header", "true")
