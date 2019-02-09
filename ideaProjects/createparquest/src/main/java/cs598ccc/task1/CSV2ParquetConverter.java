@@ -6,12 +6,16 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import static org.apache.spark.sql.functions.*;
 import org.apache.spark.sql.types.DataTypes;
+import org.apache.log4j.Logger;
+import org.apache.log4j.BasicConfigurator;
 
 
 public class CSV2ParquetConverter {
 
+    private static Logger logger = Logger.getLogger(cs598ccc.task1.CSV2ParquetConverter.class);
+
     public static void main(String[] args){
-        System.out.println("Hello CS598_CCC");
+        logger.info("Starting Converting CSV Files to Partitioned Parquet Files");
         CSV2ParquetConverter app = new CSV2ParquetConverter();
         app.start();
 
@@ -32,7 +36,9 @@ public class CSV2ParquetConverter {
                 .option("nullValue","")
                 .load("/tmp/cs598ccc/raw_data/*/*.csv");
 
-        System.out.println("Number of input rows read: " + df.count());
+
+        logger.info("Number of input rows read: " + df.count());
+
 
         //removing rows where CRSDeptime or DepTime or CRSArrTime or ArrTime are null
         Dataset<Row> filtered_df = df.where(col("CRSDepTime").isNotNull())
@@ -43,13 +49,11 @@ public class CSV2ParquetConverter {
                 .where(col("Dest").isNotNull())
                 ;
 
-
-        System.out.println("Number of rows after null values filtered outt: " + filtered_df.count());
-
+        logger.info("Number of rows after null values filtered outt: " + filtered_df.count());
 
         //adding and dropping columns to the dataframe
 
-        System.out.println("Dropping unnecessary columns");
+        logger.info("Dropping unnecessary columns");
 
         Dataset<Row> cleansed_df = filtered_df.withColumn("departure", lit(1))
                 .withColumn("arrival", lit(1))
@@ -107,8 +111,7 @@ public class CSV2ParquetConverter {
                 .drop("_c55")
                 .drop("_c75");
 
-
-        System.out.println("Cast numeric and date fields to the appropriate data type");
+        logger.info("Casting numeric and date fields to the appropriate data type");
 
         cleansed_df = cleansed_df.withColumn("Year", col("Year").cast(DataTypes.IntegerType))
                 .withColumn("Month", col("Month").cast(DataTypes.IntegerType))
@@ -145,7 +148,7 @@ public class CSV2ParquetConverter {
         cleansed_df.printSchema();
 
 
-        System.out.println("Writing data to parquet format");
+        logger.info("Writing data to parquet format at hdfs:///tmp/cs598ccc/parquet_data/ontimeperf");
 
         cleansed_df.write()
                 .format("parquet")
@@ -156,11 +159,8 @@ public class CSV2ParquetConverter {
         Dataset<Row> parquet_df = spark.read().format("parquet").load("/tmp/cs598ccc/parquet_data/ontimeperf");
         parquet_df.show(7);
         parquet_df.printSchema();
-        System.out.println("The parquet dataframe has " + parquet_df.count() + " rows. and " + parquet_df.rdd().getPartitions() + " partitions " );
 
-       Dataset<Row> counts =  parquet_df.selectExpr("count(distinct(origin)) as origin", "count(distinct(Dest)) as dest", "sum(departure) as departure");
-       System.out.println("Unique Origins and Destination Airports:" );
-       counts.show();
+        logger.info("The parquet dataframe has " + parquet_df.count() + " rows. and " + parquet_df.rdd().getNumPartitions() + " partitions " );
 
 
         Dataset<Row> groupedby_df = parquet_df.groupBy("origin", "dest")
@@ -178,7 +178,8 @@ public class CSV2ParquetConverter {
                 )
                 .orderBy(asc("origin"));
         //origins_df.show(1000);
-        System.out.println("Number of unique origin airports: " + origins_df.count());
+
+        logger.info("Number of unique origin airports: " + origins_df.count());
 
 
         Dataset<Row> destinations_df = parquet_df.groupBy("dest")
@@ -186,23 +187,32 @@ public class CSV2ParquetConverter {
                         sum(col("arrival")).alias("arrival")
                         )
                 .orderBy(asc("dest"));
+
         //destinations_df.show(1000);
-        System.out.println("Number of unique destination airports: " + destinations_df.count());
+
+        logger.info("Number of unique destination airports: " + destinations_df.count());
 
         Column joinExpression = origins_df.col("origin").equalTo(destinations_df.col("dest"));
 
         String joinType = "inner";
 
-        Dataset<Row> popularAirports2_df = origins_df.join(destinations_df, joinExpression, joinType)
+        logger.info("Querying for Top 10 Airports (Departures + Arrivals)");
+
+        Dataset<Row> topTenPopularAirports_df = origins_df.join(destinations_df, joinExpression, joinType)
                 .select(col("origin").alias("airport"), col("departure").alias("departures"), col("arrival").alias("arrivals"))
                 .withColumn("totalArrivalsAndDepartures", expr("(arrivals+departures)"))
                 .drop("departures")
                 .drop("arrivals")
-                .orderBy(desc("totalArrivalsAndDepartures"));
-        System.out.println("Airport popularity based on total departures plus arrivals");
-        popularAirports2_df.show(300);
+                .orderBy(desc("totalArrivalsAndDepartures"))
+                .limit(10)
+                ;
 
-        popularAirports2_df.coalesce(1)
+        System.out.println("Airport popularity based on total departures plus arrivals");
+        topTenPopularAirports_df.show();
+
+        logger.info("Saving top 10 airports to hdfs:///tmp/cs598ccc/queryResults/group1Dot1");
+
+        topTenPopularAirports_df.coalesce(1)
                 .write()
                 .format("csv")
                 .mode("overwrite")
