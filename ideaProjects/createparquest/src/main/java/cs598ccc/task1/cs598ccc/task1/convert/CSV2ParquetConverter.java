@@ -138,8 +138,8 @@ public class CSV2ParquetConverter {
 
 
 
-        System.out.println("First 15 rows of cleansed data");
-        cleansed_df.show(15);
+        //System.out.println("First 15 rows of cleansed data");
+        //cleansed_df.show(15);
 
 
         System.out.println("Data Schema after cleansing");

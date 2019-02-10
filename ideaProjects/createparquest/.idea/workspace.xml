@@ -10,6 +10,11 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/createparquest$DataEnrichmentProcessor.ic" NAME="DataEnrichmentProcessor Coverage Results" MODIFIED="1549812030293" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cs598ccc.task1.group1.*</FILTER>
+    </SUITE>
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
@@ -30,11 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cs598ccc/task1/group1/Group1QueryProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="41" column="53" selection-start-line="36" selection-start-column="8" selection-end-line="41" selection-end-column="53" />
+            <state relative-caret-position="947">
+              <caret line="94" lean-forward="true" selection-start-line="94" selection-end-line="94" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -42,11 +47,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cs598ccc/task1/group1/DataEnrichmentProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="622">
-              <caret line="135" column="8" selection-start-line="135" selection-start-column="8" selection-end-line="135" selection-end-column="8" />
+            <state relative-caret-position="563">
+              <caret line="181" column="69" selection-start-line="181" selection-start-column="50" selection-end-line="181" selection-end-column="69" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -57,8 +62,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cs598ccc/task1/cs598ccc/task1/convert/CSV2ParquetConverter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2190">
-              <caret line="152" column="34" selection-start-line="150" selection-start-column="7" selection-end-line="152" selection-end-column="34" />
+            <state relative-caret-position="427">
+              <caret line="141" column="10" selection-start-line="141" selection-start-column="10" selection-end-line="141" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -82,9 +87,9 @@
         <option value="$PROJECT_DIR$/src/main/java/cs598ccc/task1/Group1Queries.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/log4j.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/cs598ccc/task1/group1/DataEnrichmentProcessor.java" />
         <option value="$PROJECT_DIR$/src/main/java/cs598ccc/task1/cs598ccc/task1/convert/CSV2ParquetConverter.java" />
         <option value="$PROJECT_DIR$/src/main/java/cs598ccc/task1/group1/Group1QueryProcessor.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cs598ccc/task1/group1/DataEnrichmentProcessor.java" />
       </list>
     </option>
   </component>
@@ -96,8 +101,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="376" />
-    <option name="y" value="92" />
+    <option name="x" value="15" />
+    <option name="y" value="81" />
     <option name="width" value="2147" />
     <option name="height" value="1221" />
   </component>
@@ -106,6 +111,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -199,13 +205,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549793123050" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549832455679" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -233,7 +238,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.DataEnrichmentProcessor">
+  <component name="RunManager" selected="Application.Group1QueryProcessor">
     <configuration name="CSV2ParquetConverter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
       <option name="MAIN_CLASS_NAME" value="cs598ccc.task1.cs598ccc.task1.convert.CSV2ParquetConverter" />
@@ -283,8 +288,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DataEnrichmentProcessor" />
         <item itemvalue="Application.Group1QueryProcessor" />
+        <item itemvalue="Application.DataEnrichmentProcessor" />
         <item itemvalue="Application.CSV2ParquetConverter" />
       </list>
     </recent_temporary>
@@ -313,18 +318,19 @@
       <workItem from="1549739602534" duration="5585000" />
       <workItem from="1549760717859" duration="24556000" />
       <workItem from="1549793726093" duration="115000" />
-      <workItem from="1549794389313" duration="94000" />
+      <workItem from="1549794389313" duration="1126000" />
+      <workItem from="1549809467099" duration="13331000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81397000" />
+    <option name="totallyTimeSpent" value="95760000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="376" y="92" width="2147" height="1221" extended-state="0" />
+    <frame x="15" y="81" width="2147" height="1221" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21377672" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21567696" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -334,7 +340,7 @@
       <window_info id="Learn" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.24800709" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.24800709" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.41984057" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -346,6 +352,7 @@
       <window_info anchor="bottom" id="Java Enterprise" order="11" />
       <window_info anchor="bottom" id="Database Changes" order="12" />
       <window_info anchor="bottom" id="Version Control" order="13" />
+      <window_info anchor="right" id="Coverage" side_tool="true" visible="true" weight="0.03135392" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -443,20 +450,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cs598ccc/task1/group1/Group1QueryProcessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="41" column="53" selection-start-line="36" selection-start-column="8" selection-end-line="41" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cs598ccc/task1/cs598ccc/task1/convert/CSV2ParquetConverter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2190">
-          <caret line="152" column="34" selection-start-line="150" selection-start-column="7" selection-end-line="152" selection-end-column="34" />
+        <state relative-caret-position="427">
+          <caret line="141" column="10" selection-start-line="141" selection-start-column="10" selection-end-line="141" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -465,8 +462,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cs598ccc/task1/group1/DataEnrichmentProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="622">
-          <caret line="135" column="8" selection-start-line="135" selection-start-column="8" selection-end-line="135" selection-end-column="8" />
+        <state relative-caret-position="563">
+          <caret line="181" column="69" selection-start-line="181" selection-start-column="50" selection-end-line="181" selection-end-column="69" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cs598ccc/task1/group1/Group1QueryProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="947">
+          <caret line="94" lean-forward="true" selection-start-line="94" selection-end-line="94" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

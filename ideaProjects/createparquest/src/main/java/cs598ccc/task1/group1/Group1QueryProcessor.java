@@ -27,7 +27,7 @@ public class Group1QueryProcessor {
 
         logger.info("Reading Parquet Files");
 
-        Dataset<Row> parquet_df = spark.read().format("parquet").load("/tmp/cs598ccc/parquet_data/ontimeperf");
+        Dataset<Row> parquet_df = spark.read().format("parquet").load("/tmp/cs598ccc/parquet_data/enriched_ontimeperf");
         parquet_df.show(7);
         parquet_df.printSchema();
 
