@@ -14,6 +14,9 @@
     <SUITE FILE_PATH="coverage/createparquest$DataEnrichmentProcessor.ic" NAME="DataEnrichmentProcessor Coverage Results" MODIFIED="1549812030293" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>cs598ccc.task1.group1.*</FILTER>
     </SUITE>
+    <SUITE FILE_PATH="coverage/createparquest$Group1QueryProcessor.ic" NAME="Group1QueryProcessor Coverage Results" MODIFIED="1549835962553" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cs598ccc.task1.group1.*</FILTER>
+    </SUITE>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
@@ -38,8 +41,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cs598ccc/task1/group1/Group1QueryProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="947">
-              <caret line="94" lean-forward="true" selection-start-line="94" selection-end-line="94" />
+            <state relative-caret-position="422">
+              <caret line="100" column="8" selection-start-line="100" selection-start-column="8" selection-end-line="100" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -50,8 +53,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cs598ccc/task1/group1/DataEnrichmentProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="563">
-              <caret line="181" column="69" selection-start-line="181" selection-start-column="50" selection-end-line="181" selection-end-column="69" />
+            <state relative-caret-position="468">
+              <caret line="38" column="66" selection-start-line="38" selection-start-column="52" selection-end-line="38" selection-end-column="66" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -62,8 +65,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cs598ccc/task1/cs598ccc/task1/convert/CSV2ParquetConverter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="141" column="10" selection-start-line="141" selection-start-column="10" selection-end-line="141" selection-end-column="10" />
+            <state relative-caret-position="936">
+              <caret line="133" column="37" selection-start-line="133" selection-start-column="29" selection-end-line="133" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -101,8 +104,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="15" />
-    <option name="y" value="81" />
+    <option name="x" value="448" />
+    <option name="y" value="99" />
     <option name="width" value="2147" />
     <option name="height" value="1221" />
   </component>
@@ -210,7 +213,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549832455679" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549840149329" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -320,17 +323,18 @@
       <workItem from="1549793726093" duration="115000" />
       <workItem from="1549794389313" duration="1126000" />
       <workItem from="1549809467099" duration="13331000" />
+      <workItem from="1549833102924" duration="6683000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="95760000" />
+    <option name="totallyTimeSpent" value="102443000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="15" y="81" width="2147" height="1221" extended-state="0" />
+    <frame x="448" y="99" width="2147" height="1221" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21567696" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2175772" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -352,7 +356,6 @@
       <window_info anchor="bottom" id="Java Enterprise" order="11" />
       <window_info anchor="bottom" id="Database Changes" order="12" />
       <window_info anchor="bottom" id="Version Control" order="13" />
-      <window_info anchor="right" id="Coverage" side_tool="true" visible="true" weight="0.03135392" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -363,6 +366,7 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info anchor="right" id="Bean Validation" order="9" />
+      <window_info anchor="right" id="Coverage" order="10" side_tool="true" visible="true" weight="0.03135392" />
     </layout>
     <layout-to-restore>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20617577" />
@@ -452,8 +456,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cs598ccc/task1/cs598ccc/task1/convert/CSV2ParquetConverter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="141" column="10" selection-start-line="141" selection-start-column="10" selection-end-line="141" selection-end-column="10" />
+        <state relative-caret-position="936">
+          <caret line="133" column="37" selection-start-line="133" selection-start-column="29" selection-end-line="133" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -462,8 +466,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cs598ccc/task1/group1/DataEnrichmentProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
-          <caret line="181" column="69" selection-start-line="181" selection-start-column="50" selection-end-line="181" selection-end-column="69" />
+        <state relative-caret-position="468">
+          <caret line="38" column="66" selection-start-line="38" selection-start-column="52" selection-end-line="38" selection-end-column="66" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -472,8 +476,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cs598ccc/task1/group1/Group1QueryProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="947">
-          <caret line="94" lean-forward="true" selection-start-line="94" selection-end-line="94" />
+        <state relative-caret-position="422">
+          <caret line="100" column="8" selection-start-line="100" selection-start-column="8" selection-end-line="100" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

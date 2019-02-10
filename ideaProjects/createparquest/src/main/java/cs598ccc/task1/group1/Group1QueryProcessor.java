@@ -34,6 +34,10 @@ public class Group1QueryProcessor {
         logger.info("The parquet dataframe has " + parquet_df.count() + " rows. and " + parquet_df.rdd().getNumPartitions() + " partitions " );
 
 
+
+        logger.info("Starting Group 1: Question 1");
+
+
         Dataset<Row> groupedby_df = parquet_df.groupBy("origin", "dest")
                 .agg(
                         sum(col("departure")).alias("departure"),
@@ -91,7 +95,44 @@ public class Group1QueryProcessor {
                 .option("header", "true")
                 .save("/tmp/cs598ccc/queryResults/group1Dot1");
 
+
+
+        logger.info("Finished Group 1: Question 1");
+
+
+        logger.info("Starting Group 1: Question 2");
+
+        Dataset<Row> airline_on_time_arrival_performance = parquet_df
+                .withColumnRenamed("departureDelay", "avgOriginDelay")
+                .withColumnRenamed("arrivalDelay", "avgDestDelay")
+                .withColumn("totalTripDelay", expr("(DepDelay+ArrDelay)"))
+                .withColumn("typicalTripTime", expr("((0.117*Distance) +(0.517 * (lon_origin - lon_dest)) + 42.3) + avgOriginDelay + avgDestDelay"))
+                .withColumn("time_added", expr(("ActualElapsedTime + totalTripDelay - typicalTripTime")))
+                //.orderBy(asc("Carrier"), asc("origin"), asc("dest"), desc("FlightDate"), asc("DepTime"))
+                ;
+        //airline_on_time_arrival_performance.show(10);
+
+
+        Dataset<Row> topTenAirlineOnTimeArrivalPerformance_df = airline_on_time_arrival_performance.groupBy("Carrier")
+                .agg(
+                        avg(col("time_added")).alias("avg_time_added")
+                )
+                .orderBy(asc("avg_time_added"))
+                .limit(10);
+
+        topTenAirlineOnTimeArrivalPerformance_df.show();
+
+        topTenAirlineOnTimeArrivalPerformance_df.coalesce(1)
+                .write()
+                .format("csv")
+                .mode("overwrite")
+                .option("sep", ",")
+                .option("header", "true")
+                .save("/tmp/cs598ccc/queryResults/group1Dot2");
+
+        logger.info("Finished Group 1: Question 2");
     }
+
 
 
 }
