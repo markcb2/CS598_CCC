@@ -2,7 +2,7 @@ from pathlib import Path
 import zipfile
 import os
 
-pth = Path(r'D:\GitRepro\UIUC\CS598Capstone\raw_data\s3\aviation\airline_ontime')
+pth = Path(r'/Users/markberman/cs598_CCC/raw_data/airline_ontime')
 dirs = [x for x in pth.iterdir() if x.is_dir()]
 
 for d in dirs:

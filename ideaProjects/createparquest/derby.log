@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Sun Feb 10 00:57:43 CST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0168-d632-8bd0-00001667aac0 
+on database directory /Users/markberman/IdeaProjects/createparquest/metastore_db with class loader org.apache.spark.sql.hive.client.IsolatedClientLoader$$anon$1@71dfcf21 
+Loaded from file:/Users/markberman/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_73-b02
+user.dir=/Users/markberman/IdeaProjects/createparquest
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.14.3
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
