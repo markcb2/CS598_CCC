@@ -1,0 +1,93 @@
+package cs598ccc.task1.group2;
+
+import org.apache.spark.sql.Column;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
+import static org.apache.spark.sql.functions.*;
+import org.apache.log4j.Logger;
+import org.apache.spark.sql.expressions.Window;
+import org.apache.spark.sql.expressions.WindowSpec;
+
+public class Group2QueryProcessor {
+
+    private static Logger logger = Logger.getLogger(Group2QueryProcessor.class);
+
+    public static void main(String[] args) {
+        logger.info("Starting Group 2 Queries");
+        Group2QueryProcessor app = new Group2QueryProcessor();
+        app.start();
+    }
+
+
+    public void start(){
+
+        SparkSession spark = SparkSession.builder()
+                .appName("CGroup 2 Queries")
+                .master("local[*]")
+                .getOrCreate();
+
+        spark.sparkContext().setLogLevel("WARN");
+
+
+        logger.info("Reading Parquet Files");
+
+        Dataset<Row> enriched_ontime_perf_df = spark.read().format("parquet").load("/tmp/cs598ccc/parquet_data/enriched_ontimeperf");
+        enriched_ontime_perf_df.show(7);
+        enriched_ontime_perf_df.printSchema();
+
+
+
+        logger.info("The enriched_ontime_perf_df dataframe has " + enriched_ontime_perf_df.count() + " rows. and " + enriched_ontime_perf_df.rdd().getNumPartitions() + " partitions " );
+
+        enriched_ontime_perf_df.write()
+                .format("parquet")
+                .mode("overwrite")
+                .partitionBy("Year")
+                .saveAsTable("enriched_ontimeperf");
+
+
+        Dataset<Row> orign_airports_df = spark.read().format("parquet").load("/tmp/cs598ccc/parquet_data/origin_airports");
+        logger.info("Number of Distinct Origin Airports: " + orign_airports_df.count());
+
+        orign_airports_df.write()
+                .format("parquet")
+                .mode("overwrite")
+                .saveAsTable("orign_airports");
+
+        logger.info("Starting query 2.1");
+
+        spark.catalog().listTables().show();
+
+
+        Dataset<Row> query2_1_unfiltered_results_df = spark.sql("SELECT Origin, Carrier, avg(DepDelay) as avgDepartureDelay FROM enriched_ontimeperf WHERE Origin in (SELECT origin_airport_code FROM orign_airports) GROUP By Origin, Carrier  ORDER BY Origin ASC, avgDepartureDelay ASC");
+        //query2_1_unfiltered_results_df.show(200);
+
+        logger.info("Saving query 2.1 unfiltered results as parquet file with  " + query2_1_unfiltered_results_df.count() + " rows ");
+
+        query2_1_unfiltered_results_df.write()
+                .format("parquet")
+                .mode("overwrite")
+                .partitionBy("Origin")
+                .save("/tmp/cs598ccc/queryResults/group2Dot1_unfiltered");
+
+        WindowSpec windowSpec = Window.partitionBy("Origin").orderBy(asc("avgDepartureDelay"));
+
+        Dataset<Row> query2_1_filtered_df = query2_1_unfiltered_results_df.withColumn("rank", rank().over(windowSpec))
+                .where(col("rank").lt(11))
+                .drop("rank");
+
+        query2_1_filtered_df.show(200);
+
+        logger.info("Saving query 2.1 filtered results as parquet file with  " + query2_1_filtered_df.count() + " rows ");
+
+        query2_1_filtered_df.write()
+                .format("parquet")
+                .mode("overwrite")
+                .partitionBy("Origin")
+                .save("/tmp/cs598ccc/queryResults/group2Dot1_filtered");
+
+        logger.info("Finished Group 2: Question 1");
+
+    }
+}
