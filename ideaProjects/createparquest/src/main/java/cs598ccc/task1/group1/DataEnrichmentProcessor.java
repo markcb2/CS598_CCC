@@ -166,7 +166,6 @@ public class DataEnrichmentProcessor {
                 .withColumnRenamed("LONGITUDE","lon_dest")
                 .withColumn("LATITUDE",col("LATITUDE").cast(DataTypes.createDecimalType(10,2)))
                 .withColumnRenamed("LATITUDE","lat_dest")
-                .orderBy(asc("origin"), asc("dest"))
         ;
 
         logger.info("Number of rows in enriched_on_time_perf_final_df is: " + enriched_on_time_perf_final_df.count());
