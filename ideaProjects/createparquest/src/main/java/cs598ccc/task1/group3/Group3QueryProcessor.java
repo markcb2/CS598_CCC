@@ -41,6 +41,7 @@ public class Group3QueryProcessor {
 
         Dataset<Row> leg1 = enriched_ontimeperf
                 .withColumnRenamed("Year", "Leg1_Year")
+                .withColumnRenamed("Month","Leg1_Month")
                 .withColumnRenamed("Origin","Leg1_Origin")
                 .withColumnRenamed("Dest","Leg1_Dest")
                 .withColumnRenamed("FlightDate","Leg1_FlightDate")
@@ -77,20 +78,20 @@ public class Group3QueryProcessor {
                 ;
 
         Dataset<Row> multi_city_flight = leg1.join(leg2, joinExpression_q3_2, joinType_q3_2)
-                .select(col("Leg1_Origin"), col("Leg1_Dest"), col("Leg1_Carrier"), col("Leg1_FlightNum"), col("Leg1_FlightDate"), col("Leg1_DepTime")
+                .select(col("Leg1_Month"),col("Leg1_Origin"), col("Leg1_Dest"), col("Leg1_Carrier"), col("Leg1_FlightNum"), col("Leg1_FlightDate"), col("Leg1_DepTime")
                         , col("Leg1_ArrTime"), col("Leg1_DepDelay"),
                         col("Leg2_Origin"), col("Leg2_Dest"), col("Leg2_Carrier"), col("Leg2_FlightNum"), col("Leg2_FlightDate"), col("Leg2_DepTime")
                         , col("Leg2_ArrTime"), col("Leg2_DepDelay")
 
                 )
                 .withColumn("totalTripDelayInMinutes", expr("(Leg1_DepDelay+Leg2_DepDelay)"))
-                .orderBy(asc("Leg1_Origin"), asc("Leg1_Dest"), asc("Leg2_Dest"),asc("Leg1_FlightDate"),asc("totalTripDelayInMinutes"))
+                .orderBy(asc("Leg1_Month"), asc("Leg1_Origin"), asc("Leg1_Dest"), asc("Leg2_Dest"),asc("Leg1_FlightDate"),asc("totalTripDelayInMinutes"))
                 ;
 
         logger.info("number of multi-city flights that meet the criteria for 2008 is: " + multi_city_flight.count());
         multi_city_flight.show(100);
 
-        WindowSpec windowSpec_3_2 = Window.partitionBy("Leg1_Origin","Leg1_Dest", "Leg2_Dest", "Leg1_FlightDate").orderBy(asc("totalTripDelayInMinutes"));
+        WindowSpec windowSpec_3_2 = Window.partitionBy("Leg1_Month","Leg1_Origin","Leg1_Dest", "Leg2_Dest", "Leg1_FlightDate").orderBy(asc("totalTripDelayInMinutes"));
 
         Dataset<Row> multi_city_flight_filtered_df = multi_city_flight.withColumn("rank", rank().over(windowSpec_3_2))
                 .where(col("rank").lt(2))
@@ -103,7 +104,7 @@ public class Group3QueryProcessor {
         multi_city_flight_filtered_df.write()
                 .format("parquet")
                 .mode("overwrite")
-                .partitionBy("Leg1_Origin","Leg1_Dest", "Leg2_Dest")
+                .partitionBy("Leg1_Month")
                 .save("/tmp/cs598ccc/queryResults/group3Dot2_filtered");
 
         logger.info("Finished Query 3.2");
