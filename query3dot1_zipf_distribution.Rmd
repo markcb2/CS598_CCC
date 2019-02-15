@@ -1,0 +1,55 @@
+---
+title: "query 3.1 - Does Popularity Follow Zipf's Distribution"
+author: "Mark Berman"
+date: "2/14/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(zipfR)
+data <- read.csv("/tmp/cs598ccc/queryResults/group3dot1/part-00000-96bda7cd-6b4a-4af2-b40e-a07b3059ea4f-c000.csv")
+str(data)
+frequency <- data$totalArrivalsAndDepartures
+rank <- data$rank
+probability <- frequency/sum(frequency)
+plot(rank,probability,xlab="rank")
+plot(log(rank), log(probability))
+lzipf <- function(s,N) -s*log(1:N)-log(sum(1/(1:N)^s))
+opt.f <- function(s) sum((log(p)-lzipf(s,length(p)))^2)
+opt <- optimize(opt.f,c(0.5,10))
+opt
+s <- opt$minimum
+ll <- function(s) sum(frequency*(s*log(1:max(rank))+log(sum(1/(1:max(rank))^s))))
+fit <- mle(ll,start=list(s=1))
+summary(fit)
+s.sq <- opt$minimum
+s.ll <- coef(fit)
+plot(1:max(rank),probability,log="xy",xlab="rank")
+lines(1:max(rank),exp(lzipf(s.sq,max(rank))),col=2)
+lines(1:max(rank),exp(lzipf(s.ll,max(rank))),col=3)
+```
+```{r}
+plot(1:max(rank),probability,xlab="rank")
+
+```
+
+```{r}
+require("VGAM")
+data <- read.csv("/tmp/cs598ccc/queryResults/group3dot1/part-00000-96bda7cd-6b4a-4af2-b40e-a07b3059ea4f-c000.csv")
+str(data)
+frequency <- data$totalArrivalsAndDepartures
+
+zdata <- data.frame(y = rank(-frequency, ties.method = "first") , ofreq = frequency)
+fit = vglm(y ~ 1, zipf, zdata, trace = TRUE,weight = ofreq,crit = "coef")
+summary(fit)
+
+s <- (shat <- Coef(fit)) # the coefficient we've found
+probs <- dzipf(zdata$y, N = length(frequency), s = s) # expected values
+plot(zdata$y,(zdata$ofreq),log="xy", xlab="rank", ylab="frequency") #log log graph
+lines(zdata$y, (probs)*sum(zdata$ofreq),  col="red") # red line, num of predicted frequency
+```
+
