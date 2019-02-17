@@ -108,6 +108,8 @@ public class Group3dot2QueryProcessor {
                 .save("/tmp/cs598ccc/queryResults/group3Dot2_filtered");
 
         logger.info("Finished Query 3.2");
+
+
     }
 
 }
