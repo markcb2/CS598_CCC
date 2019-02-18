@@ -91,6 +91,7 @@ public class Group3dot1QueryProcessor {
         WindowSpec windowSpec_3_1 = Window.partitionBy("tempPartition").orderBy(desc("totalArrivalsAndDepartures"));
 
         airportPpularity_df = airportPpularity_df.withColumn("rank", rank().over(windowSpec_3_1))
+                .withColumn("group", lit(1))
                 .drop("tempPartition")
                 ;
 

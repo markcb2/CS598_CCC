@@ -75,6 +75,7 @@ public class Group1QueryProcessor {
 
         Dataset<Row> topTenPopularAirports_df = origins_df.join(destinations_df, joinExpression, joinType)
                 .select(col("origin").alias("airport"), col("departure").alias("departures"), col("arrival").alias("arrivals"))
+                .withColumn("group", lit(1))
                 .withColumn("totalArrivalsAndDepartures", expr("(arrivals+departures)"))
                 .drop("departures")
                 .drop("arrivals")
@@ -103,6 +104,7 @@ public class Group1QueryProcessor {
         logger.info("Starting Group 1: Question 2");
 
         Dataset<Row> airline_on_time_arrival_performance = parquet_df
+                .withColumn("group", lit(1))
                 .withColumnRenamed("departureDelay", "avgOriginDelay")
                 .withColumnRenamed("arrivalDelay", "avgDestDelay")
                 .withColumn("totalTripDelay", expr("(DepDelay+ArrDelay)"))
@@ -113,7 +115,7 @@ public class Group1QueryProcessor {
         //airline_on_time_arrival_performance.show(10);
 
 
-        Dataset<Row> topTenAirlineOnTimeArrivalPerformance_df = airline_on_time_arrival_performance.groupBy("Carrier")
+        Dataset<Row> topTenAirlineOnTimeArrivalPerformance_df = airline_on_time_arrival_performance.groupBy("group","Carrier")
                 .agg(
                         avg(col("time_added")).alias("avg_time_added")
                 )
