@@ -59,14 +59,14 @@ public class CreateCSVQueryResultsForGroup3 {
                 , col("Leg2_ArrTime"), col("Leg2_DepDelay"),col("totalTripDelayInMinutes")
 
                 )
-                .where(col("Leg1_Month").isin(1,4,9,12,10))
+                .where(col("Leg1_Month").isin(1,3,4,6,9,7))
                 .where(col("Leg1_FlightDate").isin(
                         "2008-01-01","2008-01-02",
-                        "2008-01-03","2008-01-04","2008-01-05",
-                        "2008-04-02","2008-04-03", "2008-04-04",
+                        "2008-03-31","2008-04-01","2008-04-02",
+                        "2008-03-03","2008-03-04", "2008-03-05",
                         "2008-09-08", "2008-09-09",
-                        "2008-10-05",  "2008-10-06",
-                        "2008-12-06", "2008-12-07"
+                        "2008-06-09",  "2008-06-10",
+                        "2008-07-11", "2008-07-12"
                 ));
 
 
@@ -88,7 +88,7 @@ public class CreateCSVQueryResultsForGroup3 {
                 .where(col("Leg1_Origin").equalTo("CMI"))
                 .where(col("Leg1_Dest").equalTo("ORD"))
                 .where(col("Leg2_Dest").equalTo("LAX"))
-                .where(col("Leg1_FlightDate").equalTo(to_date(lit("2008-04-03"))))
+                .where(col("Leg1_FlightDate").equalTo(to_date(lit("2008-03-04"))))
                 ;
 
         logger.info("cmi_ord_lax multi-city flight details");
