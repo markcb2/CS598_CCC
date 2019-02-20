@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.types.DataTypes;
+import static org.apache.spark.sql.functions.*;
 
 import java.sql.Date;
 
@@ -56,7 +56,7 @@ public class CreateCSVQueryResultsForGroup3 {
                 query3Dot2FilteredQueryResults_df.select(col("Leg1_Month"),col("Leg1_Origin"), col("Leg1_Dest"), col("Leg1_Carrier"), col("Leg1_FlightNum"), col("Leg1_FlightDate"), col("Leg1_DepTime")
                 , col("Leg1_ArrTime"), col("Leg1_DepDelay"),
                 col("Leg2_Origin"), col("Leg2_Dest"), col("Leg2_Carrier"), col("Leg2_FlightNum"), col("Leg2_FlightDate"), col("Leg2_DepTime")
-                , col("Leg2_ArrTime"), col("Leg2_DepDelay")
+                , col("Leg2_ArrTime"), col("Leg2_DepDelay"),col("totalTripDelayInMinutes")
 
                 )
                 .where(col("Leg1_Month").isin(1,4,9,12,10))
@@ -69,6 +69,30 @@ public class CreateCSVQueryResultsForGroup3 {
                         "2008-12-06", "2008-12-07"
                 ));
 
+
+        Dataset<Row> jax_dfw_crp_df = query3Dot2FilteredAndAbridgedQueryResults_df.select(col("Leg1_Origin"), col("Leg1_Dest"), col("Leg1_Carrier"),
+                col("Leg1_FlightNum"), col("Leg1_FlightDate"),col("Leg1_DepDelay"),col("Leg2_Dest"),col("Leg2_Carrier"), col("Leg2_FlightNum"),
+                col("Leg2_FlightDate"), col("Leg2_DepDelay"),col("totalTripDelayInMinutes"))
+                .where(col("Leg1_Origin").equalTo("JAX"))
+                .where(col("Leg1_Dest").equalTo("DFW"))
+                .where(col("Leg2_Dest").equalTo("CRP"))
+                .where(col("Leg1_FlightDate").equalTo(to_date(lit("2008-09-09"))))
+        ;
+
+        logger.info("jax_dfw_crp multi-city flight details");
+        jax_dfw_crp_df.show();
+
+        Dataset<Row> cmi_ord_lax_df = query3Dot2FilteredAndAbridgedQueryResults_df.select(col("Leg1_Origin"), col("Leg1_Dest"), col("Leg1_Carrier"),
+                col("Leg1_FlightNum"), col("Leg1_FlightDate"),col("Leg1_DepDelay"),col("Leg2_Dest"),col("Leg2_Carrier"), col("Leg2_FlightNum"),
+                col("Leg2_FlightDate"), col("Leg2_DepDelay"),col("totalTripDelayInMinutes"))
+                .where(col("Leg1_Origin").equalTo("CMI"))
+                .where(col("Leg1_Dest").equalTo("ORD"))
+                .where(col("Leg2_Dest").equalTo("LAX"))
+                .where(col("Leg1_FlightDate").equalTo(to_date(lit("2008-04-03"))))
+                ;
+
+        logger.info("cmi_ord_lax multi-city flight details");
+        cmi_ord_lax_df.show();
 
         logger.info("Writing CSV File Output for Abridged Query Result for Group 3, Question 2");
 
