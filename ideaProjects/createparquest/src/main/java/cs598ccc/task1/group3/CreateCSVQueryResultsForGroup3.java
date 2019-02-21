@@ -54,9 +54,9 @@ public class CreateCSVQueryResultsForGroup3 {
 
         Dataset<Row> query3Dot2FilteredAndAbridgedQueryResults_df =
                 query3Dot2FilteredQueryResults_df.select(col("Leg1_Month"),col("Leg1_Origin"), col("Leg1_Dest"), col("Leg1_Carrier"), col("Leg1_FlightNum"), col("Leg1_FlightDate"), col("Leg1_DepTime")
-                , col("Leg1_ArrTime"), col("Leg1_DepDelay"),
+                , col("Leg1_ArrTime"), col("Leg1_ArrDelay"),
                 col("Leg2_Origin"), col("Leg2_Dest"), col("Leg2_Carrier"), col("Leg2_FlightNum"), col("Leg2_FlightDate"), col("Leg2_DepTime")
-                , col("Leg2_ArrTime"), col("Leg2_DepDelay"),col("totalTripDelayInMinutes")
+                , col("Leg2_ArrTime"), col("Leg2_ArrDelay"),col("totalTripDelayInMinutes")
 
                 )
                 .where(col("Leg1_Month").isin(1,3,4,6,9,7))
@@ -71,8 +71,8 @@ public class CreateCSVQueryResultsForGroup3 {
 
 
         Dataset<Row> jax_dfw_crp_df = query3Dot2FilteredAndAbridgedQueryResults_df.select(col("Leg1_Origin"), col("Leg1_Dest"), col("Leg1_Carrier"),
-                col("Leg1_FlightNum"), col("Leg1_FlightDate"),col("Leg1_DepDelay"),col("Leg2_Dest"),col("Leg2_Carrier"), col("Leg2_FlightNum"),
-                col("Leg2_FlightDate"), col("Leg2_DepDelay"),col("totalTripDelayInMinutes"))
+                col("Leg1_FlightNum"), col("Leg1_FlightDate"),col("Leg1_ArrDelay"),col("Leg2_Dest"),col("Leg2_Carrier"), col("Leg2_FlightNum"),
+                col("Leg2_FlightDate"), col("Leg2_ArrDelay"),col("totalTripDelayInMinutes"))
                 .where(col("Leg1_Origin").equalTo("JAX"))
                 .where(col("Leg1_Dest").equalTo("DFW"))
                 .where(col("Leg2_Dest").equalTo("CRP"))
@@ -83,8 +83,8 @@ public class CreateCSVQueryResultsForGroup3 {
         jax_dfw_crp_df.show();
 
         Dataset<Row> cmi_ord_lax_df = query3Dot2FilteredAndAbridgedQueryResults_df.select(col("Leg1_Origin"), col("Leg1_Dest"), col("Leg1_Carrier"),
-                col("Leg1_FlightNum"), col("Leg1_FlightDate"),col("Leg1_DepDelay"),col("Leg2_Dest"),col("Leg2_Carrier"), col("Leg2_FlightNum"),
-                col("Leg2_FlightDate"), col("Leg2_DepDelay"),col("totalTripDelayInMinutes"))
+                col("Leg1_FlightNum"), col("Leg1_FlightDate"),col("Leg1_ArrDelay"),col("Leg2_Dest"),col("Leg2_Carrier"), col("Leg2_FlightNum"),
+                col("Leg2_FlightDate"), col("Leg2_ArrDelay"),col("totalTripDelayInMinutes"))
                 .where(col("Leg1_Origin").equalTo("CMI"))
                 .where(col("Leg1_Dest").equalTo("ORD"))
                 .where(col("Leg2_Dest").equalTo("LAX"))

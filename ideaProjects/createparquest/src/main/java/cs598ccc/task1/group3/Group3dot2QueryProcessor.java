@@ -24,7 +24,7 @@ public class Group3dot2QueryProcessor {
 
 
         SparkSession spark = SparkSession.builder()
-                .appName("CGroup 3 Queries")
+                .appName("CGroup 3 Dot 2 Query")
                 .master("local[*]")
                 .getOrCreate();
 
@@ -49,7 +49,7 @@ public class Group3dot2QueryProcessor {
                 .withColumnRenamed("ArrTime", "Leg1_ArrTime")
                 .withColumnRenamed("Carrier","Leg1_Carrier")
                 .withColumnRenamed("FlightNum", "Leg1_FlightNum")
-                .withColumnRenamed("DepDelay","Leg1_DepDelay")
+                .withColumnRenamed("ArrDelay","Leg1_ArrDelay")
 
 
                 ;
@@ -64,7 +64,7 @@ public class Group3dot2QueryProcessor {
                 .withColumnRenamed("ArrTime", "Leg2_ArrTime")
                 .withColumnRenamed("Carrier","Leg2_Carrier")
                 .withColumnRenamed("FlightNum", "Leg2_FlightNum")
-                .withColumnRenamed("DepDelay","Leg2_DepDelay")
+                .withColumnRenamed("ArrDelay","Leg2_ArrDelay")
                 ;
 
         String joinType_q3_2 = "inner";
@@ -79,12 +79,12 @@ public class Group3dot2QueryProcessor {
 
         Dataset<Row> multi_city_flight = leg1.join(leg2, joinExpression_q3_2, joinType_q3_2)
                 .select(col("Leg1_Month"),col("Leg1_Origin"), col("Leg1_Dest"), col("Leg1_Carrier"), col("Leg1_FlightNum"), col("Leg1_FlightDate"), col("Leg1_DepTime")
-                        , col("Leg1_ArrTime"), col("Leg1_DepDelay"),
+                        , col("Leg1_ArrTime"), col("Leg1_ArrDelay"),
                         col("Leg2_Origin"), col("Leg2_Dest"), col("Leg2_Carrier"), col("Leg2_FlightNum"), col("Leg2_FlightDate"), col("Leg2_DepTime")
-                        , col("Leg2_ArrTime"), col("Leg2_DepDelay")
+                        , col("Leg2_ArrTime"), col("Leg2_ArrDelay")
 
                 )
-                .withColumn("totalTripDelayInMinutes", expr("(Leg1_DepDelay+Leg2_DepDelay)"))
+                .withColumn("totalTripDelayInMinutes", expr("(Leg1_ArrDelay+Leg2_ArrDelay)"))
                 .orderBy(asc("Leg1_Month"), asc("Leg1_Origin"), asc("Leg1_Dest"), asc("Leg2_Dest"),asc("Leg1_FlightDate"),asc("totalTripDelayInMinutes"))
                 ;
 
