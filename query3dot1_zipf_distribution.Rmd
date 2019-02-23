@@ -9,47 +9,60 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+
+
 ```{r}
-library(zipfR)
-data <- read.csv("/tmp/cs598ccc/queryResults/group3dot1/part-00000-96bda7cd-6b4a-4af2-b40e-a07b3059ea4f-c000.csv")
+library(gamlss.dist)
+data <- read.csv("~/cs598_ccc/cassandra_files/queryResults/group3dot1/part-00000-bd06de5d-24f3-4203-857b-d0adfe9e11b7-c000.csv")
 str(data)
-frequency <- data$totalArrivalsAndDepartures
+totalArrivalsAndDepartures <- data$totalArrivalsAndDepartures
 rank <- data$rank
-probability <- frequency/sum(frequency)
-plot(rank,probability,xlab="rank")
-plot(log(rank), log(probability))
-lzipf <- function(s,N) -s*log(1:N)-log(sum(1/(1:N)^s))
-opt.f <- function(s) sum((log(p)-lzipf(s,length(p)))^2)
-opt <- optimize(opt.f,c(0.5,10))
-opt
-s <- opt$minimum
-ll <- function(s) sum(frequency*(s*log(1:max(rank))+log(sum(1/(1:max(rank))^s))))
-fit <- mle(ll,start=list(s=1))
-summary(fit)
-s.sq <- opt$minimum
-s.ll <- coef(fit)
-plot(1:max(rank),probability,log="xy",xlab="rank")
-lines(1:max(rank),exp(lzipf(s.sq,max(rank))),col=2)
-lines(1:max(rank),exp(lzipf(s.ll,max(rank))),col=3)
+probability <- totalArrivalsAndDepartures/sum(totalArrivalsAndDepartures)
+airportPopularityRank <- seq(1,length(totalArrivalsAndDepartures))
+zipfProbDensity <- dZIPF(airportPopularityRank, mu=1,log=T)
+plot(log(airportPopularityRank), zipfProbDensity,type="l",xlab = "log (Airport Popularity rank)", ylab = "log (Probability Density)", col="dodgerblue")
+lines(log(rank), log(probability), col="red")
+legend(0, -10, legend=c("Fitted Zipf Distribution", "Log-Log (Airport Popularity Rank Probability Distribution"),
+       col=c("dodgerblue", "red"), lty=1:2, cex=0.8)
 ```
 ```{r}
-plot(1:max(rank),probability,xlab="rank")
-
+plot(density(totalArrivalsAndDepartures),main="Density estimate of data")
+```
+```{r}
+hist(totalArrivalsAndDepartures,main="Histogram of observed data", ylim=c(0,339), xlim=c(0,13500000),breaks=25, labels=T)
 ```
 
+
+
+
+
 ```{r}
-require("VGAM")
-data <- read.csv("/tmp/cs598ccc/queryResults/group3dot1/part-00000-96bda7cd-6b4a-4af2-b40e-a07b3059ea4f-c000.csv")
+library(poweRlaw)
+data <- read.csv("~/cs598_ccc/cassandra_files/queryResults/group3dot1/part-00000-bd06de5d-24f3-4203-857b-d0adfe9e11b7-c000.csv")
 str(data)
-frequency <- data$totalArrivalsAndDepartures
+totalArrivalsAndDepartures <- data$totalArrivalsAndDepartures
+totArrDep_pl = displ$new(totalArrivalsAndDepartures)
+est_pl_xmin = estimate_xmin(totArrDep_pl)
+totArrDep_pl$setXmin(est_pl_xmin)
+totArrDep_ln = dislnorm$new(totalArrivalsAndDepartures)
+est_ln_xmin = estimate_xmin(totArrDep_ln)
+totArrDep_ln$setXmin(est_ln_xmin)
+totArrDep_pois <- dispois$new(totalArrivalsAndDepartures)
+est_pois_xmin <- estimate_xmin(totArrDep_pois)
+totArrDep_pois$setXmin(est_pois_xmin)
+ plot(totArrDep_pl, xlab = "total arrivals and departures", ylab = "ccdf", ylim=c(0.01,1),xlim=c(1,1.3e+07))
+ lines(totArrDep_pl, col="red")
+ lines(totArrDep_ln, col="green")
+ lines(totArrDep_pois, col="dodgerblue", length.out=339)
+ legend(1, 0.05, legend=c("powerlaw", "log-normal", "poison"),
+       col=c("red", "green", "dodgerblue"), lty=1:2, cex=0.8)
 
-zdata <- data.frame(y = rank(-frequency, ties.method = "first") , ofreq = frequency)
-fit = vglm(y ~ 1, zipf, zdata, trace = TRUE,weight = ofreq,crit = "coef")
-summary(fit)
 
-s <- (shat <- Coef(fit)) # the coefficient we've found
-probs <- dzipf(zdata$y, N = length(frequency), s = s) # expected values
-plot(zdata$y,(zdata$ofreq),log="xy", xlab="rank", ylab="frequency") #log log graph
-lines(zdata$y, (probs)*sum(zdata$ofreq),  col="red") # red line, num of predicted frequency
+```
+
+```{r}
+bs_ln_p = bootstrap_p(totArrDep_ln,threads=5,xmax=1.3e+07)
+bs_ln_p$p
 ```
 
