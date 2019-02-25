@@ -1,0 +1,11 @@
+/Users/markberman/cs598_CCC/code/createparquest/src/main/java/cs598ccc/task1/group2/Group2QueryProcessor.java
+/Users/markberman/cs598_CCC/code/createparquest/src/main/java/cs598ccc/task1/group2/CreateCSVQueryResultsForGroup2.java
+/Users/markberman/cs598_CCC/code/createparquest/src/main/java/cs598ccc/task1/group1/Group1QueryProcessor.java
+/Users/markberman/cs598_CCC/code/createparquest/src/main/java/cs598ccc/task1/group1/DataEnrichmentProcessor.java
+/Users/markberman/cs598_CCC/code/createparquest/src/main/java/cs598ccc/task1/group3/Group3dot1QueryProcessor.java
+/Users/markberman/cs598_CCC/code/createparquest/src/main/java/cs598ccc/task1/group3/Group3dot2QueryProcessorV2.java
+/Users/markberman/cs598_CCC/code/createparquest/src/main/java/cs598ccc/task1/group2/PersistAirportsAndCarriersAsParquet.java
+/Users/markberman/cs598_CCC/code/createparquest/src/main/java/cs598ccc/task1/group3/Group3dot2QueryProcessor.java
+/Users/markberman/cs598_CCC/code/createparquest/src/main/java/cs598ccc/task1/group3/CreateCSVQueryResultsForGroup3.java
+/Users/markberman/cs598_CCC/code/createparquest/src/main/java/cs598ccc/task1/convert/CSV2ParquetConverter.java
+/Users/markberman/cs598_CCC/code/createparquest/src/main/java/cs598ccc/task1/test/log4j/Log4jTester.java
