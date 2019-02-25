@@ -29,7 +29,7 @@ public class PersistAirportsAndCarriersAsParquet
 
         logger.info("Reading Parquet Files");
 
-        Dataset<Row> enriched_ontime_perf_df = spark.read().format("parquet").load("/tmp/cs598ccc/parquet_data/enriched_ontimeperf");
+        Dataset<Row> enriched_ontime_perf_df = spark.read().format("parquet").load("hdfs:///cs598ccc/parquet_data/enriched_ontimeperf");
         enriched_ontime_perf_df.show(7);
         enriched_ontime_perf_df.printSchema();
 
@@ -40,7 +40,7 @@ public class PersistAirportsAndCarriersAsParquet
         origin_airports_df.write()
                 .format("parquet")
                 .mode("overwrite")
-                .save("/tmp/cs598ccc/parquet_data/origin_airports");
+                .save("hdfs:///cs598ccc/parquet_data/origin_airports");
 
 
         Dataset<Row> dest_airports_df = enriched_ontime_perf_df.select(col("dest")).distinct()
@@ -50,7 +50,7 @@ public class PersistAirportsAndCarriersAsParquet
         dest_airports_df.write()
                 .format("parquet")
                 .mode("overwrite")
-                .save("/tmp/cs598ccc/parquet_data/dest_airports");
+                .save("hdfs:///cs598ccc/parquet_data/dest_airports");
 
         Dataset<Row> carriers_df = enriched_ontime_perf_df.select(col("Carrier")).distinct()
                 .withColumnRenamed("Carrier", "Airline");
@@ -59,7 +59,7 @@ public class PersistAirportsAndCarriersAsParquet
         carriers_df.write()
                 .format("parquet")
                 .mode("overwrite")
-                .save("/tmp/cs598ccc/parquet_data/airlines");
+                .save("hdfs:///cs598ccc/parquet_data/airlines");
 
 
     }

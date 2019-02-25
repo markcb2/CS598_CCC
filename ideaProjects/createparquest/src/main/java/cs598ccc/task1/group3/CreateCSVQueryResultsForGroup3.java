@@ -33,7 +33,7 @@ public class CreateCSVQueryResultsForGroup3 {
 
         logger.info("Reading Parquet Files for Query Result for Group 3, Question 2");
 
-        Dataset<Row> query3Dot2FilteredQueryResults_df = spark.read().format("parquet").load("/tmp/cs598ccc/queryResults/group3Dot2_filtered");
+        Dataset<Row> query3Dot2FilteredQueryResults_df = spark.read().format("parquet").load("hdfs:///cs598ccc/queryResults/group3Dot2_filtered");
         query3Dot2FilteredQueryResults_df.show(7);
         query3Dot2FilteredQueryResults_df.printSchema();
 
@@ -45,7 +45,7 @@ public class CreateCSVQueryResultsForGroup3 {
                 .mode("overwrite")
                 .option("sep", ",")
                 .option("header", "true")
-                .save("/tmp/cs598ccc/queryResults/group3Dot2_filtered_csv");
+                .save("hdfs:///cs598ccc/queryResults/group3Dot2_filtered_csv");
 
         logger.info("CSV File Output for Query Result for Group 3, Question 2 Has Been Written");
 
@@ -102,7 +102,7 @@ public class CreateCSVQueryResultsForGroup3 {
                 .mode("overwrite")
                 .option("sep", ",")
                 .option("header", "true")
-                .save("/tmp/cs598ccc/queryResults/group3Dot2_filtered_and_abridged_csv");
+                .save("hdfs:///cs598ccc/queryResults/group3Dot2_filtered_and_abridged_csv");
 
         logger.info("CSV File Output for Abridged Query Result for Group 3, Question 2 Has Been Written");
 

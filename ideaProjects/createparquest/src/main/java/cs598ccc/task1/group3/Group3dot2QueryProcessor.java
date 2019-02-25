@@ -33,7 +33,7 @@ public class Group3dot2QueryProcessor {
 
         logger.info("Reading Parquet Files");
 
-        Dataset<Row> enriched_ontimeperf = spark.read().format("parquet").load("/tmp/cs598ccc/parquet_data/enriched_ontimeperf");
+        Dataset<Row> enriched_ontimeperf = spark.read().format("parquet").load("hdfs:///cs598ccc/parquet_data/enriched_ontimeperf");
         enriched_ontimeperf.show(7);
         enriched_ontimeperf.printSchema();
 
@@ -105,7 +105,7 @@ public class Group3dot2QueryProcessor {
                 .format("parquet")
                 .mode("overwrite")
                 .partitionBy("Leg1_Month")
-                .save("/tmp/cs598ccc/queryResults/group3Dot2_filtered");
+                .save("hdfs:///cs598ccc/queryResults/group3Dot2_filtered");
 
         logger.info("Finished Query 3.2");
 

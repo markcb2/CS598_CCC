@@ -32,7 +32,7 @@ public class CSV2ParquetConverter {
                 .option("sep",",")
                 .option("dateFormat", "y-M-d")
                 .option("nullValue","")
-                .load("/tmp/cs598ccc/raw_data/*/*.csv");
+                .load("hdfs:///cs598ccc/raw_data/*/*.csv");
 
 
         logger.info("Number of input rows read: " + df.count());
@@ -145,13 +145,13 @@ public class CSV2ParquetConverter {
         cleansed_df.printSchema();
 
 
-        logger.info("Writing data to parquet format at hdfs:///tmp/cs598ccc/parquet_data/ontimeperf");
+        logger.info("Writing data to parquet format at hdfs:///cs598ccc/parquet_data/ontimeperf");
 
         cleansed_df.write()
                 .format("parquet")
                 .mode("overwrite")
                 .partitionBy("Year")
-                .save("/tmp/cs598ccc/parquet_data/ontimeperf");
+                .save("hdfs:///cs598ccc/parquet_data/ontimeperf");
 
         logger.info("Finished writing parquet files");
     }

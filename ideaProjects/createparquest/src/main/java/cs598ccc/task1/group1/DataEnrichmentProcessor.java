@@ -28,7 +28,7 @@ public class DataEnrichmentProcessor {
 
         logger.info("Reading Parquet Files");
 
-        Dataset<Row> parquet_df = spark.read().format("parquet").load("/tmp/cs598ccc/parquet_data/ontimeperf");
+        Dataset<Row> parquet_df = spark.read().format("parquet").load("hdfs:///cs598ccc/parquet_data/ontimeperf");
         parquet_df.show(7);
         parquet_df.printSchema();
 
@@ -68,7 +68,7 @@ public class DataEnrichmentProcessor {
                 .option("sep",",")
                 .option("dateFormat", "y-M-d")
                 .option("nullValue","")
-                .load("/tmp/cs598ccc/ref_data/417923300_T_MASTER_CORD_All_All.csv");
+                .load("hdfs:///cs598ccc/ref_data/417923300_T_MASTER_CORD_All_All.csv");
 
         logger.info("Number of master coordinate data input rows read: " + masterCoordintes_df.count());
 
@@ -172,13 +172,13 @@ public class DataEnrichmentProcessor {
 
         //enriched_on_time_perf_final_df.show(50);
 
-        logger.info("Writing data to parquet format at hdfs:///tmp/cs598ccc/parquet_data/enriched_ontimeperf");
+        logger.info("Writing data to parquet format at hdfs://hdfs:///cs598ccc/parquet_data/enriched_ontimeperf");
 
         enriched_on_time_perf_final_df.write()
                 .format("parquet")
                 .mode("overwrite")
                 .partitionBy("Year")
-                .save("/tmp/cs598ccc/parquet_data/enriched_ontimeperf");
+                .save("hdfs:///cs598ccc/parquet_data/enriched_ontimeperf");
 
         logger.info("Finished writing parquet files");
 

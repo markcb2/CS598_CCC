@@ -27,7 +27,7 @@ public class Group1QueryProcessor {
 
         logger.info("Reading Parquet Files");
 
-        Dataset<Row> parquet_df = spark.read().format("parquet").load("/tmp/cs598ccc/parquet_data/enriched_ontimeperf");
+        Dataset<Row> parquet_df = spark.read().format("parquet").load("hdfs:///cs598ccc/parquet_data/enriched_ontimeperf");
         parquet_df.show(7);
         parquet_df.printSchema();
 
@@ -86,7 +86,7 @@ public class Group1QueryProcessor {
         System.out.println("Airport popularity based on total departures plus arrivals");
         topTenPopularAirports_df.show();
 
-        logger.info("Saving top 10 airports to hdfs:///tmp/cs598ccc/queryResults/group1Dot1");
+        logger.info("Saving top 10 airports to hdfs:///cs598ccc/queryResults/group1Dot1");
 
         topTenPopularAirports_df.coalesce(1)
                 .write()
@@ -94,7 +94,7 @@ public class Group1QueryProcessor {
                 .mode("overwrite")
                 .option("sep", ",")
                 .option("header", "true")
-                .save("/tmp/cs598ccc/queryResults/group1Dot1");
+                .save("hdfs:///cs598ccc/queryResults/group1Dot1");
 
 
 
@@ -130,7 +130,7 @@ public class Group1QueryProcessor {
                 .mode("overwrite")
                 .option("sep", ",")
                 .option("header", "true")
-                .save("/tmp/cs598ccc/queryResults/group1Dot2");
+                .save("hdfs:///cs598ccc/queryResults/group1Dot2");
 
         logger.info("Finished Group 1: Question 2");
     }

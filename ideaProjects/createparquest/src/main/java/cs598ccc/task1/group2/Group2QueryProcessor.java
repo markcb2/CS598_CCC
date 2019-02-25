@@ -32,7 +32,7 @@ public class Group2QueryProcessor {
 
         logger.info("Reading Parquet Files");
 
-        Dataset<Row> enriched_ontime_perf_df = spark.read().format("parquet").load("/tmp/cs598ccc/parquet_data/enriched_ontimeperf");
+        Dataset<Row> enriched_ontime_perf_df = spark.read().format("parquet").load("hdfs:///cs598ccc/parquet_data/enriched_ontimeperf");
         enriched_ontime_perf_df.show(7);
         enriched_ontime_perf_df.printSchema();
 
@@ -47,7 +47,7 @@ public class Group2QueryProcessor {
                 .saveAsTable("enriched_ontimeperf");
 
 
-        Dataset<Row> orign_airports_df = spark.read().format("parquet").load("/tmp/cs598ccc/parquet_data/origin_airports");
+        Dataset<Row> orign_airports_df = spark.read().format("parquet").load("hdfs:///cs598ccc/parquet_data/origin_airports");
         logger.info("Number of Distinct Origin Airports: " + orign_airports_df.count());
 
         orign_airports_df.write()
@@ -56,7 +56,7 @@ public class Group2QueryProcessor {
                 .saveAsTable("orign_airports");
 
 
-        Dataset<Row> dest_airports_df = spark.read().format("parquet").load("/tmp/cs598ccc/parquet_data/dest_airports");
+        Dataset<Row> dest_airports_df = spark.read().format("parquet").load("hdfs:///cs598ccc/parquet_data/dest_airports");
         logger.info("Number of Distinct Destination Airports: " + dest_airports_df.count());
 
         dest_airports_df.write()
@@ -79,7 +79,7 @@ public class Group2QueryProcessor {
                 .format("parquet")
                 .mode("overwrite")
                 .partitionBy("Origin")
-                .save("/tmp/cs598ccc/queryResults/group2Dot1_unfiltered");
+                .save("hdfs:///cs598ccc/queryResults/group2Dot1_unfiltered");
 
         WindowSpec windowSpec = Window.partitionBy("Origin").orderBy(asc("avgDepartureDelay"));
 
@@ -95,7 +95,7 @@ public class Group2QueryProcessor {
                 .format("parquet")
                 .mode("overwrite")
                 .partitionBy("Origin")
-                .save("/tmp/cs598ccc/queryResults/group2Dot1_filtered");
+                .save("hdfs:///cs598ccc/queryResults/group2Dot1_filtered");
 
         logger.info("Finished Group 2: Question 1");
 
@@ -113,7 +113,7 @@ public class Group2QueryProcessor {
                 .format("parquet")
                 .mode("overwrite")
                 .partitionBy("Origin")
-                .save("/tmp/cs598ccc/queryResults/group2Dot2_unfiltered");
+                .save("hdfs:///cs598ccc/queryResults/group2Dot2_unfiltered");
 
         WindowSpec windowSpec_2_2 = Window.partitionBy("Origin").orderBy(asc("avgDepartureDelay"));
 
@@ -129,7 +129,7 @@ public class Group2QueryProcessor {
                 .format("parquet")
                 .mode("overwrite")
                 .partitionBy("Origin")
-                .save("/tmp/cs598ccc/queryResults/group2Dot2_filtered");
+                .save("hdfs:///cs598ccc/queryResults/group2Dot2_filtered");
 
         logger.info("Finished Group 2: Question 2");
 
@@ -145,7 +145,7 @@ public class Group2QueryProcessor {
                 .format("parquet")
                 .mode("overwrite")
                 .partitionBy("Origin")
-                .save("/tmp/cs598ccc/queryResults/group2Dot4");
+                .save("hdfs:///cs598ccc/queryResults/group2Dot4");
 
         logger.info("Finished Group 2: Question 4");
 
